@@ -1,5 +1,5 @@
-var EvContract = artifacts.require("./EvContract.sol");
+var SimpleStorage = artifacts.require("./SimpleStorage.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(EvContract);
+  deployer.deploy(SimpleStorage);
 };
