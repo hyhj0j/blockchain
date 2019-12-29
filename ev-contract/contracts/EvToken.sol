@@ -15,10 +15,10 @@ contract EvToken is IERC20 {
      * these values are immutable: they can only be set once during
      * construction.
      */
-    constructor (string memory name, string memory symbol, uint8 decimals) public {
-        _name = name;
-        _symbol = symbol;
-        _decimals = decimals;
+    constructor () public {
+        _name = EvToken;
+        _symbol = EVT;
+        _decimals = 100000000;
     }
 
     /**
