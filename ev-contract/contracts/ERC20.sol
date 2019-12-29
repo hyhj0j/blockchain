@@ -1,9 +1,9 @@
 pragma solidity ^0.5.0;
 
 
-import "ev-contract/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "./SafeMath.sol";
 import "./IERC20.sol";
-import "ev-contract/node_modules/openzeppelin-solidity/contracts/GSN/Context.sol";
+import "./Context.sol";
 
 
 /**
