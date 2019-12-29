@@ -10,13 +10,15 @@ contract EvContract{
         uint socR;
     }
 
-    address [] buyerList;
-    address [] sellerList;
-    address [] idealList;
+    address[] buyerList;
+    address[] sellerList;
+    address[] idealList;
 
     mapping(uint => carOwner) public carOwnerInfo;
     //@@@@@@@@@@수정필요@@@@@@ uint는 num이고, num을 키값으로하면, 밸류값으로 해당 carOwner의 정보를 불러오는 맵핑구조
     //num 은 거래 참여를 결심한 사람들에게 부여되는 순차적인 숫자를 나타냄
+
+    address payable public owner;
 
     event LogTradeElec( // 어떤 이벤트가 생성됐을때 그 이벤트 내용도 블록에 저장됨
     // 프론트엔드에서 거래 완료메시지로 어떤 계정(_owner)들이 얼마(_kw)를 거래했습니다 라고 보여줄 것임
@@ -29,12 +31,12 @@ contract EvContract{
         owner = msg.sender; // msg.sender는 현재 사용하는 계정으로 생성자나 함수를 가져옴 (값은 주소형임)
     }
 
-    function setCarOwner(string _name, string _carNum, uint _socI, uint _socR){ // 정보등록
+    function setCarOwner(string memory _name, string memory _carNum, uint _socI, uint _socR) public{ // 정보등록
         carOwnerInfo[num] = carOwner(msg.sender, _name, _carNum, _socI, _socR);
         setOwnerState(_socI, _socR);
     }
 
-    function setOwnerState(uint _socI, uint _socR){ //판매자,구매자,암것도 안하는놈 설정
+    function setOwnerState(uint _socI, uint _socR) public{ //판매자,구매자,암것도 안하는놈 설정
         if(_socI > _socR){
             sellerList.push(msg.sender);
         } else if(_socI < _socR){
