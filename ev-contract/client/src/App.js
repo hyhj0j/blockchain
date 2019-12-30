@@ -49,21 +49,7 @@ class App extends Component {
 }
 
 
-setInfo(){ //¾û¸ÁÁøÃ¢.
-  this.state.EvInstance.setCarOwner({
-    from: this.state.myAccount,
-    value: this.state.web3.toWei(10, "ether"),
-    gas: 900000
-  });
-}
 
-getInfo(){
-  this.state.EvInstance.getCarOwner({
-    name: _name,
-    carNum: _carNum
-
-  });
-}
 
 export default App;
 

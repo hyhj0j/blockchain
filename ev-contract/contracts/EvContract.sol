@@ -42,7 +42,9 @@ contract EvContract is ERC20{
         require(_id >= 0 && _id <= 8);
         carowners[_id] = msg.sender;
         carOwnerInfo[_id] = carOwner(msg.sender, _name, _carNum, _socI, _socR);
-        deposit();
+        //deposit();
+        uint defaultEvToken = 10;
+        transferFrom(publisher, msg.sender, defaultEvToken);
     }
 
     
@@ -53,18 +55,11 @@ contract EvContract is ERC20{
 
 
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool){
-
-
     _balances[_from] = _balances[_from].sub(_value);
-
     _balances[_to] = _balances[_to].add(_value);
-
-    _allowed[_from][msg.sender] = _allowed[_from][msg.sender].sub(_value);
-
+    _allowances[_from][msg.sender] = _allowances[_from][msg.sender].sub(_value);
     emit Transfer(_from, _to, _value);
-
     return true;
-
   }
     /*** 
     function deposit() payable public{
