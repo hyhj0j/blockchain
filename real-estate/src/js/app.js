@@ -3,7 +3,7 @@ App = {
   contracts: {},
 	
   init: function() {
-    $.getJSON('../real-estate.json', function(data) {
+    $.getJSON('../EvContract.json', function(data) {
       var list = $('#list');
       var template = $('#template');
 
