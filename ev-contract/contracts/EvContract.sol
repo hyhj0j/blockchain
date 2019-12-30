@@ -20,30 +20,63 @@ contract EvContract is ERC20{
 
 
     address payable public publisher;
-    uint cnt=0;
+    address[9] public carowners;
 
-    
+    mapping (uint => carOwner) public carOwnerInfo;
+    mapping (address => uint256) private _balances;
+    mapping (address => mapping (address => uint256)) private _allowances;
 
-    mapping(uint => carOwner) public carOwnerInfo;
+
+    event logSetCarOwner(
+        address carOwner,
+        uint _id
+    );
+
 
     constructor() public{
         publisher = msg.sender;
         _mint(publisher, INITIAL_SUPPLY);
-        totalSupply();
-        balanceOf(msg.sender);
     }
 
-    function setCarOwner(string memory _name, string memory _carNum, uint _socI, uint _socR) public{
-        carOwnerInfo[cnt] = carOwner(msg.sender, _name, _carNum, _socI, _socR);
-    //    setOwnerState(_socI, _socR);
-        cnt += 1;
+    function setCarOwner(uint _id, string memory _name, string memory _carNum, uint _socI, uint _socR) payable public{
+        require(_id >= 0 && _id <= 8);
+        carowners[_id] = msg.sender;
+        carOwnerInfo[_id] = carOwner(msg.sender, _name, _carNum, _socI, _socR);
+        deposit();
     }
 
     
-    function getCarOwner() public view returns(string memory){
-        for(uint8 i = 0; i<cnt ; i++)
-            return carOwnerInfo[0].name;
+    function getCarOwner(uint _id) public view returns(address, string memory, string memory){
+        carOwner memory carowner = carOwnerInfo[_id];
+        return (carowner.ownerAddress, carowner.name, carowner.carNum);
     }
+
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool){
+
+
+    _balances[_from] = _balances[_from].sub(_value);
+
+    _balances[_to] = _balances[_to].add(_value);
+
+    _allowed[_from][msg.sender] = _allowed[_from][msg.sender].sub(_value);
+
+    emit Transfer(_from, _to, _value);
+
+    return true;
+
+  }
+    /*** 
+    function deposit() payable public{
+        publisher.transfer(msg.value);
+        uint evToken = (msg.value * 10) / 1 ether;
+        this._balances = this._balances[msg.sender].add(evToken);
+    }
+
+    function () payable public{
+        deposit();
+    }
+    ***/
 
     
 
